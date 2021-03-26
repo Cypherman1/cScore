@@ -1,0 +1,23 @@
+<template>
+    <div componentid="<%= UID %>_wrapper">
+    </div>
+</template>
+
+
+<script>
+export default {
+    data(){
+        return{
+        }
+    },
+    computed : {
+    },
+    methods: {
+    }
+}
+</script>
+
+<style scoped>
+  [componentid="<%= UID %>_wrapper"] {
+  }
+</style>

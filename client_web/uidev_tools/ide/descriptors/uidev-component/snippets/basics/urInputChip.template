@@ -1,0 +1,13 @@
+<template>
+    <ur-input-chip componentid="<%= UID %>" @click-delete="<%= UID %>__click_delete" icon="map" color="normal" size="medium">Seoul</ur-input-chip>
+</template>
+
+<script>
+export default {
+    methods: {
+      <%= UID %>__click_delete(){
+        console.log('input chip delete click')
+      }
+    }
+}
+</script>

@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 30 30">
+  <defs>
+    <style>
+      .cls-1, .cls-4, .cls-5 {
+        fill: none;
+      }
+
+      .cls-2 {
+        clip-path: url(#clip-Import_user_line_30);
+      }
+
+      .cls-3 {
+        clip-path: url(#clip-path);
+      }
+
+      .cls-4, .cls-5 {
+        stroke: #000;
+        stroke-width: 1.5px;
+      }
+
+      .cls-5 {
+        stroke-linejoin: round;
+      }
+    </style>
+    <clipPath id="clip-path">
+      <path id="Path_5" data-name="Path 5" class="cls-1" d="M0-25.2H25.341V0H0Z"/>
+    </clipPath>
+    <clipPath id="clip-Import_user_line_30">
+      <rect width="30" height="30"/>
+    </clipPath>
+  </defs>
+  <g id="Import_user_line_30" class="cls-2">
+    <rect id="Rectangle_1" data-name="Rectangle 1" class="cls-1" width="30" height="30"/>
+    <g id="Group_6" data-name="Group 6" transform="translate(2.3 27.496)">
+      <g id="Group_5" data-name="Group 5" class="cls-3">
+        <g id="Group_1" data-name="Group 1" transform="translate(19.797 -6.858)">
+          <path id="Path_1" data-name="Path 1" class="cls-4" d="M0,0-3.591,2.463l2.464,3.591"/>
+        </g>
+        <g id="Group_2" data-name="Group 2" transform="translate(16.768 -4.283)">
+          <path id="Path_2" data-name="Path 2" class="cls-4" d="M0,0A9.308,9.308,0,0,1,7.981,3.822"/>
+        </g>
+        <g id="Group_3" data-name="Group 3" transform="translate(17.619 -10.816)">
+          <path id="Path_3" data-name="Path 3" class="cls-5" d="M0,0A12.6,12.6,0,0,0-6.941-1.964a11.71,11.71,0,0,0-8.4,3.181,4.235,4.235,0,0,0-1.53,3.458v1.7a.781.781,0,0,0,.781.783H-5.644"/>
+        </g>
+        <g id="Group_4" data-name="Group 4" transform="translate(10.791 -15.382)">
+          <path id="Path_4" data-name="Path 4" class="cls-4" d="M0,0A4.537,4.537,0,0,0,4.531-4.533,4.534,4.534,0,0,0,0-9.064,4.535,4.535,0,0,0-4.531-4.533,4.538,4.538,0,0,0,0,0Z"/>
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>

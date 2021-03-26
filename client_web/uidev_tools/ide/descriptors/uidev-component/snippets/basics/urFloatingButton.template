@@ -1,0 +1,22 @@
+<template>
+    <ur-floating-button componentid="<%= UID %>" @click="<%= UID %>__click" primary >
+      <ur-icon componentid="<%= UID %>__icon" icon="add" iconType="picto" color="normal" full />
+    </ur-floating-button>
+</template>
+
+<script>
+export default {
+    methods: {
+      <%= UID %>__click(){
+        console.log('floating button click')
+      }
+    }
+}
+</script>
+
+<style scoped>
+    [componentid="<%= UID %>__icon"] {
+        width: 24px;
+        height: 24px;
+    }
+</style>

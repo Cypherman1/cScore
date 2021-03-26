@@ -1,0 +1,38 @@
+{
+  "name": "uidev-project-template",
+  "version": "2.0.1",
+  "private": true,
+  "scripts": {
+    "serve": "vue-cli-service serve --mode=development",
+    "build": "vue-cli-service build",
+    "ide": "node ./uidev_tools/build/descriptorBuild.js & vue-cli-service build --mode=ide --dest=uidev_application"
+  },
+  "dependencies": {
+    "@ant-design/icons-vue": "^6.0.1",
+    "ant-design-vue": "^1.7.4",
+    "axios": "^0.21.1",
+    "bootstrap": "^4.4.1",
+    "cache-loader": "^4.1.0",
+    "core-js": "^2.6.5",
+    "konva": "^7.2.5",
+    "moment": "^2.29.1",
+    "uidev-component": "file:local_modules/uidev-component-1.0.1_20201112.tgz",
+    "v-viewer": "^1.5.1",
+    "vue": "^2.6.10",
+    "vue-cookies": "^1.7.0",
+    "vue-konva": "^2.1.7",
+    "vue-loader": "^15.9.6",
+    "vue-router": "^3.0.3",
+    "vue-uuid": "^2.0.2",
+    "vuex": "^3.0.1"
+  },
+  "devDependencies": {
+    "@vue/cli-plugin-babel": "^3.12.0",
+    "@vue/cli-service": "^3.12.0",
+    "ansi-regex": "^5.0.0",
+    "sass": "^1.27.0",
+    "sass-loader": "^10.0.3",
+    "vue-svg-loader": "^0.17.0-beta.2",
+    "vue-template-compiler": "^2.6.10"
+  }
+}

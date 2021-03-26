@@ -1,0 +1,28 @@
+<template>
+    <ur-search-box componentid="<%= UID %>" :col="2" @search="searchList" label-size="150px">
+        <ur-search-row>
+            <ur-search-item label="이름(E-mail)">
+                <ur-text-field clearable v-model="searchText" @enter="searchList" />
+            </ur-search-item>
+        </ur-search-row>
+    </ur-search-box>
+</template>
+
+<script>
+    export default {
+        data() {
+            return {
+                <%= UID %>__searchText: ''
+            }
+        },
+        methods: {
+            <%= UID %>__searchList(){
+                console.log('search list event');
+            }
+        }
+    };
+</script>
+<style scoped>
+  [componentid="<%= UID %>"] {
+  }
+</style>

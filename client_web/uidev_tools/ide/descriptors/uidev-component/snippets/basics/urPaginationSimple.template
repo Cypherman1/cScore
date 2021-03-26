@@ -1,0 +1,25 @@
+<template>
+    <ur-pagination componentid="<%= UID %>" simple :pagination="<%= UID %>__page" @move="<%= UID %>__move" />
+</template>
+
+<script>
+export default {
+    data(){
+        return{
+            <%= UID %>__page: {
+                rowsPerPage: 10,
+                currentPage: 1,
+                totalPages: 5,
+                totalItems: 50
+            }
+        }
+
+    },
+    methods: {
+      <%= UID %>__move(page){
+        this.<%= UID %>__page.currentPage = page;
+        // need logic for table or others
+      }
+    }
+}
+</script>

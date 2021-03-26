@@ -1,0 +1,32 @@
+<template>
+    <ur-card componentid="<%= UID %>">
+        <div class="ur-card__contents">
+            <div class="ur-card__profile">
+                <img src="/images/avatar_68x68.png" class="ur-card__avatar"/>
+                <div class="ur-card__name">
+                    Tiffany Yoo
+                </div>
+                <div class="ur-card__second">
+                    cx.opus@example.com
+                </div>
+            </div>
+            <img class="ur-card__media" src="/images/thumb_92x52.png"/>
+            <div class="ur-card__body">
+                Lorem Ipsum is simply dummy text of
+                the printing and typesetting industry
+            </div>
+            <div class="ur-card__action">
+                이진호<hr v/>
+                <ur-icon>display_password</ur-icon> 50<hr v/>
+                <ur-icon>recommend</ur-icon> 0<hr v/>
+                <ur-icon>comment</ur-icon> 3
+            </div>
+        </div>
+    </ur-card>
+</template>
+
+<style scoped>
+    [componentid="<%= UID %>"] {
+        width: 304px;
+    }
+</style>

@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 30 30">
+  <defs>
+    <style>
+      .cls-1 {
+        clip-path: url(#clip-list_view);
+      }
+
+      .cls-2 {
+        fill: #fff;
+      }
+    </style>
+    <clipPath id="clip-list_view">
+      <rect width="30" height="30"/>
+    </clipPath>
+  </defs>
+  <g id="list_view" data-name="list view" class="cls-1">
+    <rect class="cls-2" width="30" height="30"/>
+    <g id="list_view-2" data-name="list view" transform="translate(-1101.825 -477.754)">
+      <path id="Path_63" data-name="Path 63" d="M26.3-300.2H7.8v-18.18H26.3ZM3.325-318.382H6.3v18.18H3.325Zm23.16-1.5H3.143a1.319,1.319,0,0,0-1.318,1.316v18.547A1.319,1.319,0,0,0,3.143-298.7H26.485a1.319,1.319,0,0,0,1.317-1.317v-18.547a1.319,1.319,0,0,0-1.317-1.316" transform="translate(1102 801.636)"/>
+    </g>
+  </g>
+</svg>

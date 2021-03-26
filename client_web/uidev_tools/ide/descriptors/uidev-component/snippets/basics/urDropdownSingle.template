@@ -1,0 +1,20 @@
+<template>
+    <ur-dropdown componentid="<%= UID %>" :items="<%= UID %>__items" v-model="<%= UID %>__value"/>
+</template>
+
+<script>
+export default {
+    data(){
+        return{
+            <%= UID %>__items: ['ace', 'boss', 'crew', 'duck', 'eagle'],
+            <%= UID %>__value: 'ace'
+        }
+    }
+}
+</script>
+
+<style scoped>
+  [componentid="<%= UID %>"] {
+      width: 180px;
+  }
+</style>

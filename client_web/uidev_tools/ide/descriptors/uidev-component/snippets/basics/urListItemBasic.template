@@ -1,0 +1,29 @@
+<template>
+    <ur-list-item componentid="<%= UID %>" mode="none">
+        <img class="list-item__thumb" src="/images/thumb_52x52.png"/>
+        <div class="list-item__contents">
+            <div class="list-item__contents__title">
+                Lorem ipsum dolor sit amet
+            </div>
+            <div class="list-item__contents__text">
+                consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
+            </div>
+        </div>
+    </ur-list-item>
+</template>
+
+<script>
+export default {
+    data(){
+        return{
+            <%= UID %>__value: false
+        }
+    }
+}
+</script>
+
+<style scoped>
+    [componentid="<%= UID %>"] {
+        width: 750px;
+    }
+</style>

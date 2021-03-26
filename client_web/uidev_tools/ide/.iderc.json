@@ -1,0 +1,67 @@
+{
+  "type": "vuecli3",
+  "npm-components": [
+    "uidev-component"
+  ],
+  "local-components": [],
+  "asset-install-file": "src/component.js",
+  "designer-attributes": {
+    "screen-sizes": {
+      "custom-screen-size": {
+        "width": 1424,
+        "height": 800
+      },
+      "applied-screen-size": {
+        "type": "desktop"
+      }
+    }
+  },
+  "initial-template-file": "uidev_tools/ide/descriptors/uidev-component/snippets/pages/initPage.template",
+  "initial-open-file": "src/layouts/contents/pages/Empty.vue",
+  "uiexplorer": {
+    "subfolders": [
+      {
+        "displayname": "Layouts",
+        "subfolders": [
+          {
+            "displayname": "Frame",
+            "subfolders": [
+              {
+                "displayname": "frame",
+                "path": "src/components/frames/Frame.json"
+              }
+            ]
+          },
+          {
+            "displayname": "Contents",
+            "path": "src/layouts/contents",
+            "pattern": [
+              ".vue"
+            ]
+          },
+          {
+            "displayname": "Router",
+            "subfolders": [
+              {
+                "displayname": "pageRoutes",
+                "path": "src/systems/router/pageRoutes.js"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "displayname": "Theme",
+        "subfolders": [
+          {
+            "displayname": "Default",
+            "path": "src/styles/theme",
+            "pattern": [
+              ".scss"
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

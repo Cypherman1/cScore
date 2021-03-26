@@ -1,0 +1,13 @@
+<template>
+    <ur-switch componentid="<%= UID %>" class="ur-switch-ide" v-model="<%= UID %>__value"/>
+</template>
+
+<script>
+export default {
+    data(){
+        return{
+          <%= UID %>__value: true
+        }
+    }
+}
+</script>

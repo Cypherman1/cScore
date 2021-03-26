@@ -1,0 +1,25 @@
+<template>
+    <ur-card componentid="<%= UID %>">
+        <div class="ur-card__contents">
+            <div class="ur-card__header">
+                Lorem Ipsum is dummy text of the
+                printing and typesetting industry.
+            </div>
+            <div class="ur-card__body body1">
+                Lorem Ipsum is simply dummy text of the printing and
+                typesetting industry.
+            </div>
+            <div class="ur-card__body body2" style="margin-bottom: 0px;">
+                Lorem Ipsum is simply dummy text of the printing and
+                typesetting industry. Lorem Ipsum has been the industry's
+                standard dummy text ever since the 1500s, when an unknown...
+            </div>
+        </div>
+    </ur-card>
+</template>
+
+<style scoped>
+    [componentid="<%= UID %>"] {
+        width: 448px;
+    }
+</style>

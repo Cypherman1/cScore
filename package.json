@@ -1,0 +1,37 @@
+{
+  "name": "sdsrv-aicr",
+  "version": "1.0.0",
+  "description": "Powerful character recognize solution",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "server": "nodemon index.js",
+    "client": "npm run start --prefix client",
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "install-all": "yarn install && cd ./client && yarn install"
+  },
+  "author": "SDSRV",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.19.2",
+    "bcrypt": "^5.0.0",
+    "body-parser": "^1.19.0",
+    "compression": "^1.7.4",
+    "cookie-session": "^1.3.3",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "form-data": "^3.0.0",
+    "global": "^4.4.0",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.8.3",
+    "multer": "^1.4.2",
+    "passport": "^0.4.1",
+    "passport-google-oauth20": "^2.0.0",
+    "socket.io-client": "^2.3.0"
+  },
+  "devDependencies": {
+    "concurrently": "^5.0.2",
+    "nodemon": "^2.0.2"
+  }
+}

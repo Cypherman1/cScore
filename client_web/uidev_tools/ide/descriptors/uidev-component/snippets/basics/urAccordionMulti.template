@@ -1,0 +1,88 @@
+<template>
+    <ur-list-item componentid="<%= UID %>" expandable mode="check" v-model="<%= UID %>__value">
+        <div class="list-item__contents">
+            <div class="list-item__contents__title">KIM DA JUNG</div>
+            <div class="list-item__contents__text list-item__contents__body">Senier staff / Solution Group</div>
+        </div>
+        <div class="list-item__contents">
+            <div class="list-item__contents__text">Samsung SDS</div>
+            <div class="list-item__contents__text">Senier staff / Solution Group</div>
+        </div>
+        <div class="list-item__contents">
+            <div class="list-item__contents__text">2018-08-01 ~ 2021-07-30</div>
+        </div>
+        <div class="list-item__contents">
+            <div class="list-item__contents__text">Confirm</div>
+        </div>
+        <template v-slot:expand>
+            <div class="list-item__contents list-item__contents__row">
+                <div class="list-item__contents__label">
+                    Location
+                </div>
+                <div class="list-item__contents__text">
+                    Dallas TX.
+                </div>
+            </div>
+            <div class="list-item__contents list-item__contents__row">
+                <div class="list-item__contents__label">
+                    Event Date/Time
+                </div>
+                <div class="list-item__contents__text">
+                    10/4 ~ 10/5
+                </div>
+            </div>
+            <div class="list-item__contents list-item__contents__row">
+                <div class="list-item__contents__label">
+                    Shipper
+                </div>
+                <div class="list-item__contents__text">
+                    SAMSUNG ELECTRONIC (SEA)
+                </div>
+            </div>
+            <div class="list-item__contents list-item__contents__row">
+                <div class="list-item__contents__label">
+                    Total Loss
+                </div>
+                <div class="list-item__contents__text">
+                    $ 130,320.24 USD
+                </div>
+            </div>
+            <div class="list-item__contents list-item__contents__row">
+                <div class="list-item__contents__label">
+                    Event Outline
+                </div>
+                <div class="list-item__contents__text">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. <br />
+                    Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+                </div>
+            </div>
+            <div class="list-item__contents list-item__contents__row">
+                <div class="list-item__contents__label">
+                    Event Handling
+                </div>
+                <div class="list-item__contents__text">
+                    Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+                </div>
+            </div>
+            <div class="list-item__contents list-item__contents__action">
+                <ur-button color="primary" shape="solid">BUTTON</ur-button>
+            </div>
+        </template>
+    </ur-list-item>
+</template>
+
+
+<script>
+export default {
+    data(){
+        return{
+            <%= UID %>__value: false
+        }
+    }
+}
+</script>
+<style scoped>
+  [componentid="<%= UID %>"] {
+    width: 800px;
+  }
+</style>

@@ -1,0 +1,29 @@
+<template>
+    <ur-card componentid="<%= UID %>" class="ur-card--top-media">
+        <div style="margin: 8px;">
+            <div class="ur-card__contents-image" style="position: relative;">
+                <img class="ur-card__media" src="/images/thumb_92x52.png"/>
+                <span class="ur-card__tag" componentid="<%= UID %>__tag">Retail</span>
+            </div>
+            <div class="ur-card__contents-text">
+                <div class="ur-card__header">
+                    Lorem ipsum
+                </div>
+                <div class="ur-card__body">
+                    Lorem Ipsum is simply  now on
+                </div>
+            </div>
+        </div>
+    </ur-card>
+</template>
+
+<style scoped>
+    [componentid="<%= UID %>"] {
+        width: 306px;
+    }
+    [componentid="<%= UID %>__tag"] {
+        position: absolute;
+      	bottom: 4px;
+        right: 4px;
+    }
+</style>

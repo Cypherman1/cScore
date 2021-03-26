@@ -1,0 +1,104 @@
+{
+    "/menu": {
+        "menus": [
+            {
+                "id": 1,
+                "label": "MONITORING",
+                "order": "00000",
+                "pageid": "P1",
+                "route": "/"
+            },
+            {
+                "id": 6,
+                "label": "TEMPLATE",
+                "order": "00000",
+                "pageid": "P6"
+            },
+            {
+                "id": 7,
+                "label": "COMPLEX",
+                "order": "00000",
+                "pageid": "P7",
+                "parent_id": 6
+            },
+            {
+                "id": 8,
+                "label": "Complex01",
+                "order": "00000",
+                "pageid": "P8",
+                "route": "/8/page/template/Complex/Complex01",
+                "parent_id": 7
+            },
+            {
+                "id": 9,
+                "label": "Complex02",
+                "order": "00000",
+                "pageid": "P9",
+                "route": "/9/page/template/Complex/Complex02",
+                "parent_id": 7
+            },
+            {
+                "id": 10,
+                "label": "SPLIT",
+                "order": "00000",
+                "pageid": "P10",
+                "parent_id": 6
+            },
+            {
+                "id": 11,
+                "label": "Split01",
+                "order": "00000",
+                "pageid": "P11",
+                "route": "/11/page/template/Split/Split01",
+                "parent_id": 10
+            },
+            {
+                "id": 12,
+                "label": "Split02",
+                "order": "00000",
+                "pageid": "P12",
+                "route": "/12/page/template/Split/Split02",
+                "parent_id": 10
+            },
+            {
+                "id": 13,
+                "label": "Split03",
+                "order": "00000",
+                "pageid": "P13",
+                "route": "/13/page/template/Split/Split03",
+                "parent_id": 10
+            },
+            {
+                "id": 14,
+                "label": "STACK",
+                "order": "00000",
+                "pageid": "P14",
+                "parent_id": 6
+            },
+            {
+                "id": 15,
+                "label": "Stack01",
+                "order": "00000",
+                "pageid": "P15",
+                "route": "/15/page/template/Stack/Stack01",
+                "parent_id": 14
+            },
+            {
+                "id": 16,
+                "label": "Stack02",
+                "order": "00000",
+                "pageid": "P16",
+                "route": "/16/page/template/Stack/Stack02",
+                "parent_id": 14
+            },
+            {
+                "id": 17,
+                "label": "Stack03",
+                "order": "00000",
+                "pageid": "P17",
+                "route": "/17/page/template/Stack/Stack03",
+                "parent_id": 14
+            }
+        ]
+    }
+}
