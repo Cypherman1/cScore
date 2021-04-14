@@ -5,6 +5,7 @@ import VueCookies from "vue-cookies";
 import auth from "./commons/auth/index";
 import menu from "./modules/menu/index";
 import sevm from "./modules/sevm/index";
+import circuit from "./modules/circuit/index";
 Vue.use(Vuex);
 Vue.use(VueCookies);
 
@@ -24,5 +25,6 @@ export default new Vuex.Store({
   modules: {
     menu: menu,
     sevm: sevm,
+    circuit: circuit,
   },
 });

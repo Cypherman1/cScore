@@ -9,6 +9,7 @@ import Viewer from "v-viewer";
 import "ant-design-vue/dist/antd.css";
 import "viewerjs/dist/viewer.css";
 import VueKonva from "vue-konva";
+import UUID from "vue-uuid";
 
 import "./components";
 import "./styles/common.scss";
@@ -18,6 +19,7 @@ Vue.use(DatePicker);
 Vue.use(Table);
 Vue.use(Viewer);
 Vue.use(Tabs);
+Vue.use(UUID);
 
 Vue.config.productionTip = false;
 
