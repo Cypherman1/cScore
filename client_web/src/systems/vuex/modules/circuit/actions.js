@@ -7,6 +7,12 @@ export default {
   setSelectedBox({ commit }, selectedBox) {
     commit("set_selected_box", selectedBox);
   },
+  setChosingGate({ commit }, chosingGate) {
+    commit("set_chosing_gate", chosingGate);
+  },
+  setDropBox({ commit }, dropBox) {
+    commit("set_drop_box", dropBox);
+  },
   setIsDragging({ commit }, isDragging) {
     commit("set_is_dragging", isDragging);
   },
@@ -21,5 +27,8 @@ export default {
   },
   changeGridRow({ commit }, num) {
     commit("change_grid_row", num);
+  },
+  calcCircuitInfo({ commit }) {
+    commit("calc_circuit_info");
   },
 };

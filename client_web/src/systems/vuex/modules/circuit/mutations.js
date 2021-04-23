@@ -5,6 +5,12 @@ export default {
   set_selected_box(state, selectedBox) {
     state.selectedBox = selectedBox;
   },
+  set_chosing_gate(state, chosingGate) {
+    state.chosingGate = chosingGate;
+  },
+  set_drop_box(state, dropBox) {
+    state.dropBox = dropBox;
+  },
   set_is_dragging(state, isDragging) {
     state.isDragging = isDragging;
   },
@@ -12,7 +18,6 @@ export default {
     state.draggingGate = draggingGate;
   },
   set_gate_position(state, pos) {
-    console.log(pos.gate_target_qubits);
     state.gates = state.gates.map((gate) =>
       gate.id === pos.id
         ? {
@@ -30,5 +35,67 @@ export default {
   },
   change_grid_col(state, num) {
     state.gCol = state.gCol + num;
+  },
+  calc_circuit_info(state) {
+    let circuitWidth = 0;
+    let circuitDepth = 0;
+
+    state.gates.map((gate) => {
+      if (gate.gate_target_qubits[0] >= circuitWidth) {
+        circuitWidth = gate.gate_target_qubits[0];
+      }
+      if (gate.gate_layer >= circuitDepth) {
+        circuitDepth = gate.gate_layer;
+      }
+    });
+    state.circuitWidth = circuitWidth + 1;
+    state.circuitDepth = circuitDepth + 1;
+    state.circuitInfo = {
+      ...state.circuitInfo,
+      environment: { platform: "default", target: "default" },
+    };
+    state.circuitInfo = {
+      ...state.circuitInfo,
+      circuit_info: {
+        circuit_width: Number(circuitWidth) + 1,
+        circuit_depth: Number(circuitDepth) + 1,
+        num_layers: Number(circuitDepth) + 1,
+      },
+    };
+    for (let i = 0; i <= Number(circuitDepth); i++) {
+      state.circuitInfo = {
+        ...state.circuitInfo,
+        circuit_info: {
+          ...state.circuitInfo.circuit_info,
+          layers: [
+            ...(state.circuitInfo.circuit_info.layers || []),
+            {
+              layer_index: i,
+              num_gates: 0,
+              gates: [],
+            },
+          ],
+        },
+      };
+    }
+    let layers = state.circuitInfo.circuit_info.layers;
+    state.gates.map((gate) => {
+      let curentLayer = gate.gate_layer;
+      let id = layers.findIndex((obj) => obj.layer_index === curentLayer);
+      if (id > -1) {
+        layers[id].num_gates++;
+        layers[id].gates.push({
+          gate_index: layers[id].gates.length,
+          gate_type: gate.gate_type,
+          gate_control_qubits: gate.gate_control_qubits,
+          gate_target_qubits: gate.gate_target_qubits,
+          gate_params: gate.gate_params,
+        });
+      }
+    });
+    state.circuitInfo = {
+      ...state.circuitInfo,
+      circuit_info: { ...state.circuitInfo.circuit_info, layers: layers },
+    };
   },
 };

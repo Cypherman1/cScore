@@ -22,6 +22,7 @@
     "vue": "^2.6.10",
     "vue-cookies": "^1.7.0",
     "vue-json-pretty": "^1.7.1",
+    "vue-json-viewer": "^2.2.18",
     "vue-konva": "^2.1.7",
     "vue-loader": "^15.9.6",
     "vue-router": "^3.0.3",
@@ -30,7 +31,7 @@
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.12.0",
-    "@vue/cli-service": "^4.5.12",
+    "@vue/cli-service": "^4.1.1",
     "ansi-regex": "^5.0.0",
     "sass": "^1.27.0",
     "sass-loader": "^10.0.3",

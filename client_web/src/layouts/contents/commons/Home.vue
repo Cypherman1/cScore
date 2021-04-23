@@ -7,29 +7,11 @@
       <div class="col left-panel m-panel">
         <a-tabs default-active-key="1" size="small" :tabBarGutter="0">
           <a-tab-pane key="1" tab="Gates">
-            <div class="pl-2" draggable="true" @dragstart="drag">
-              <svg class="testSVG" height="80" width="80">
-                <rect
-                  stroke="black"
-                  stroke-width="1"
-                  x="5"
-                  y="5"
-                  :width="this.gWidth"
-                  :height="this.gHeight"
-                  fill="none"
-                ></rect>
-                <text
-                  class="qbit-label"
-                  x="25"
-                  y="25"
-                  dominant-baseline="middle"
-                  text-anchor="middle"
-                  fill="black"
-                >
-                  Y
-                </text>
-              </svg>
-            </div>
+            <panel-gate
+              v-for="pGate in panelGates"
+              :pGate="pGate"
+              :key="pGate.gateType"
+            ></panel-gate>
           </a-tab-pane>
           <a-tab-pane key="2" tab="Custom gates" force-render>
             Content of Tab Pane 2
@@ -44,96 +26,83 @@
         @drop="handleDrop"
         @dragover="handleDragOver"
       >
-        <svg
-          class="testSVG"
-          :height="cHeight / 2 + gHeight / 2 + cHeight * gRow"
-          :width="cWidth * (gCol + 2) + 30"
-        >
-          <g v-for="rowid in gRow">
-            <text
-              :x="0"
-              :y="cHeight / 2 + gHeight / 2 + cHeight * (rowid - 1) - 10"
-              class="qbit-lable"
-            >
-              q{{ rowid - 1 }}
-            </text>
-            <line
-              :y1="cHeight / 2 + gHeight / 2 + cHeight * (rowid - 1)"
-              :x1="0"
-              :y2="cHeight / 2 + gHeight / 2 + cHeight * (rowid - 1)"
-              :x2="cWidth * (gCol + 1) + 30"
-              stroke="grey"
-              stroke-width="2"
-            ></line>
-            <!-- <rect
-              v-for="(cell, colid) in row"
-              :y="cHeight * rowid"
-              :x="30 + cWidth * colid"
-              :width="cWidth"
-              :height="cHeight"
-              stroke="none"
-              stroke-width="1"
-              fill="none"
-              :data-row="rowid"
-              :data-col="colid"
-              class="q-gate-holder"
-            ></rect> -->
-          </g>
-          <rect
-            v-if="selectedBox"
-            :y="selectedBox.y"
-            :x="selectedBox.x"
-            :height="selectedBox.height"
-            :width="selectedBox.width"
-            stroke="grey"
-            stroke-width="0"
-            fill="lightgrey"
-          ></rect>
-
-          <g
-            v-for="gate in gates"
-            :gate-id="gate.id"
-            @mousedown="tdrag"
-            @mouseup="tdrop"
-            @mousemove="tmove"
-            :style="cursor"
+        <div class="designer-panel">
+          <svg
+            :height="cHeight / 2 + gHeight / 2 + cHeight * gRow + 50"
+            :width="cWidth * (gCol + 2) + 80"
           >
-            <rect
-              stroke="black"
-              stroke-width="2"
-              :x="gate.x"
-              :y="gate.y"
-              :width="gWidth"
-              :height="gHeight"
-              fill="white"
-            ></rect>
-            <text
-              class="qbit-label"
-              :x="gate.x + gWidth / 2"
-              :y="gate.y + gHeight / 2"
-              dominant-baseline="middle"
-              text-anchor="middle"
-              fill="black"
-            >
-              {{ gate.gate_type }}
-            </text>
-          </g>
-        </svg>
+            <qu-bit v-for="rowid in gRow" :rowid="rowid" :key="rowid"></qu-bit>
+            <drop-box :dropBox="dropBox"></drop-box>
+            <quantum-gate
+              v-for="gate in gates"
+              :gate="gate"
+              :key="gate.id"
+            ></quantum-gate>
+          </svg>
+        </div>
+        <div class="infomation-panel row">
+          <div class="col infomation-panel-col">
+            <div class="infomation-panel-header row">
+              <div class="ml-1 mt-1">Probability</div>
+              <div class="ml-auto">
+                <a-button type="link" icon="small-dash" />
+              </div>
+            </div>
+            <div></div>
+          </div>
+          <div class="col infomation-panel-col">
+            <div class="infomation-panel-header row">
+              <div class="ml-1 mt-1">State vector</div>
+              <div class="ml-auto">
+                <a-button type="link" icon="small-dash" />
+              </div>
+            </div>
+            <div></div>
+          </div>
+          <div class="col">
+            <div class="infomation-panel-header row">
+              <div class="ml-1 mt-1">Bloch sphere</div>
+              <div class="ml-auto">
+                <a-button type="link" icon="small-dash" />
+              </div>
+            </div>
+            <div></div>
+          </div>
+        </div>
       </div>
       <div class="col right-panel m-panel">
-        <vue-json-pretty :data="gates"> </vue-json-pretty>
+        <a-tabs default-active-key="1" size="small" :tabBarGutter="0">
+          <a-tab-pane key="1" tab="Circuit info" force-render>
+            <vue-json-pretty :data="circuitInfo"> </vue-json-pretty>
+          </a-tab-pane>
+          <a-tab-pane key="2" tab="Circuit renderer">
+            <vue-json-pretty :data="gates"> </vue-json-pretty>
+          </a-tab-pane>
+        </a-tabs>
       </div>
     </div>
   </div>
 </template>
 <script>
-import { mapGetters, mapActions } from "vuex";
-import { debounce } from "debounce";
 import GNB from "../../../components/frames/commons/GNB.vue";
+import QuantumGate from "../../../components/quantum/QuantumGate.vue";
+import QuBit from "../../../components/quantum/QuBit";
+import DropBox from "../../../components/quantum/DropBox";
 import VueJsonPretty from "vue-json-pretty";
 import "vue-json-pretty/lib/styles.css";
+import { mapGetters, mapActions } from "vuex";
+import PanelGate from "../../../components/quantum/PanelGate.vue";
 export default {
-  components: { GNB, VueJsonPretty },
+  components: {
+    GNB,
+    VueJsonPretty,
+    QuantumGate,
+    QuBit,
+    QuBit,
+    DropBox,
+    PanelGate,
+    DropBox,
+  },
   data() {
     return {
       cWidth: 68,
@@ -164,114 +133,75 @@ export default {
       gRow: "circuit/gRow",
       gCol: "circuit/gCol",
       selectedBox: "circuit/selectedBox",
+      dropBox: "circuit/dropBox",
       isDragging: "circuit/isDragging",
       draggingGate: "circuit/draggingGate",
+      panelGates: "circuit/panelGates",
+      chosingGate: "circuit/chosingGate",
+      circuitInfo: "circuit/circuitInfo",
     }),
     cursor() {
       return `cursor: ${this.draggingGate ? "grabbing" : "grab"}`;
     },
   },
+
   methods: {
     ...mapActions({
       addGate: "circuit/addGate",
       setSelectedBox: "circuit/setSelectedBox",
-      setIsDragging: "circuit/setIsDragging",
-      setDraggingGate: "circuit/setDraggingGate",
-      setGatePosition: "circuit/setGatePosition",
+      setDropBox: "circuit/setDropBox",
       changeGridCol: "circuit/changeGridCol",
       changeGridRow: "circuit/changeGridRow",
+      calcCircuitInfo: "circuit/calcCircuitInfo",
     }),
-    drag(ev) {
-      ev.dataTransfer.setData("text", ev.target.id);
-      ev.dataTransfer.effectAllowed = "copy";
-    },
     handleDrop(e) {
       e.preventDefault();
-      let col = Math.floor((e.clientX - 336) / this.cWidth);
-      let row = Math.floor((e.clientY - 120) / this.cHeight);
-      this.addGate({
-        id: this.$uuid.v4(),
-        gate_target_qubits: [row],
-        gate_control_qubits: [],
-        gate_layer: col,
-        gate_type: "Y",
-        x: 30 + this.cWidth - this.gWidth + this.cWidth * col,
-        y: this.cHeight - this.gHeight + this.cHeight * row,
-      });
-      this.setSelectedBox(null);
+      let col = Math.floor(e.offsetX / this.cWidth);
+      let row = Math.floor(e.offsetY / this.cHeight);
+      if (!this.draggingGate) {
+        this.addGate({
+          id: this.$uuid.v4(),
+          gate_target_qubits: [row],
+          gate_control_qubits: [],
+          gate_layer: col,
+          gate_type: this.chosingGate,
+          gate_params: {},
+          x: this.cWidth - this.gWidth + this.cWidth * col,
+          y: this.cHeight - this.gHeight + this.cHeight * row,
+        });
+      }
+      this.calcCircuitInfo();
+      this.setDropBox(null);
     },
     handleDragOver(e) {
       e.preventDefault();
-      let col = Math.floor((e.clientX - 336) / this.cWidth);
-      let row = Math.floor((e.clientY - 120) / this.cHeight);
+      let col = Math.floor(e.offsetX / this.cWidth);
+      let row = Math.floor(e.offsetY / this.cHeight);
+      if (col > this.gCol) this.changeGridCol(1);
+      if (row >= this.gRow) this.changeGridRow(1);
       if (col >= 0) {
-        this.setSelectedBox({
-          x: 30 + this.cWidth - this.gWidth + this.cWidth * col,
+        this.setDropBox({
+          x: this.cWidth - this.gWidth + this.cWidth * col,
           y: this.cHeight - this.gHeight + this.cHeight * row,
           width: this.gWidth,
           height: this.gHeight,
         });
       }
     },
-
-    tdrag(e) {
-      e.preventDefault();
-      this.setDraggingGate(e.currentTarget.getAttribute("gate-id"));
-      this.dragOffsetX =
-        e.offsetX - e.currentTarget.querySelector("rect").getAttribute("x");
-      this.dragOffsetY =
-        e.offsetY - e.currentTarget.querySelector("rect").getAttribute("y");
-    },
-    tdrop(e) {
-      e.preventDefault();
-      this.dragOffsetX = this.dragOffsetY = null;
-      let col = Math.floor((e.clientX - 336) / this.cWidth);
-      let row = Math.floor((e.clientY - 120) / this.cHeight);
-
-      this.setGatePosition({
-        id: this.draggingGate,
-        gate_target_qubits: [row],
-        gate_layer: [col],
-        x: 30 + this.cWidth - this.gWidth + this.cWidth * col,
-        y: this.cHeight - this.gHeight + this.cHeight * row,
-      });
-      this.setDraggingGate(false);
-      this.setSelectedBox(null);
-    },
-    tmove(e) {
-      e.preventDefault();
-      if (this.draggingGate) {
-        let col = Math.floor((e.clientX - 336) / this.cWidth);
-        let row = Math.floor((e.clientY - 120) / this.cHeight);
-        console.log(col);
-        this.setGatePosition({
-          id: this.draggingGate,
-          gate_target_qubits: [row],
-          gate_layer: [col],
-          x: e.offsetX - this.dragOffsetX,
-          y: e.offsetY - this.dragOffsetY,
-        });
-
-        if (col > this.gCol) this.changeGridCol(1);
-        if (row >= this.gRow) this.changeGridRow(1);
-        if (col >= 0) {
-          this.setSelectedBox({
-            x: 30 + this.cWidth - this.gWidth + this.cWidth * col,
-            y: this.cHeight - this.gHeight + this.cHeight * row,
-            width: this.gWidth,
-            height: this.gHeight,
-          });
-        }
-      }
-    },
   },
-  mounted() {},
 };
 </script>
 
 <style scoped>
 .qbit-lable {
   font: italic 13px;
+}
+.infomation-panel-header {
+  border-bottom: 2px solid lightgray;
+  margin-left: -15px;
+  margin-right: -15px;
+  /* height: 30px; */
+  align-items: "center";
 }
 .designer-main {
   height: calc(100vh - 140px);
@@ -289,18 +219,34 @@ export default {
   flex-grow: 0;
   flex-shrink: 0;
   flex-basis: 250px;
+  padding-right: 0px;
 }
 .main-panel {
-  padding-top: 20px;
   border-right: 2px solid lightgray;
-  overflow-x: scroll;
-  overflow-y: scroll;
+}
+.infomation-panel {
+  height: 250px;
+  margin-left: -15px;
+  margin-right: -15px;
+}
+.infomation-panel-col {
+  border-right: 2px solid lightgray;
+}
+
+.designer-panel {
+  border-bottom: 2px solid lightgray;
+  margin-left: -15px;
+  margin-right: -15px;
+  overflow-x: auto;
+  overflow-y: auto;
+  height: calc(100vh - 388px);
+  padding-left: 10px;
 }
 .right-panel {
   border-right: 2px solid lightgray;
   flex-grow: 0;
   flex-shrink: 0;
-  flex-basis: 450px;
+  flex-basis: 350px;
 }
 .testSVG {
   z-index: 100;
