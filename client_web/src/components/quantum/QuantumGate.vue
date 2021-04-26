@@ -50,6 +50,9 @@ export default {
       draggingGate: "circuit/draggingGate",
       gRow: "circuit/gRow",
       gCol: "circuit/gCol",
+      circuitInfo: "circuit/circuitInfo",
+      probsLabels: "circuit/probsLabels",
+      probsData: "circuit/probsData",
     }),
     cursor() {
       return `cursor: ${this.draggingGate ? "grabbing" : "grab"}`;
@@ -69,6 +72,7 @@ export default {
       changeGridCol: "circuit/changeGridCol",
       changeGridRow: "circuit/changeGridRow",
       calcCircuitInfo: "circuit/calcCircuitInfo",
+      updateCircuit: "circuit/updateCircuit",
     }),
     tdrag(e) {
       this.setDraggingGate(e.currentTarget.getAttribute("gate-id"));
@@ -91,6 +95,7 @@ export default {
         });
       }
       this.calcCircuitInfo();
+      this.updateCircuit(this.circuitInfo);
       this.setDraggingGate(false);
       this.setDropBox(null);
     },

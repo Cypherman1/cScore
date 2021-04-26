@@ -128,6 +128,14 @@ export default {
     circuitWidth: 0,
     circuitDepth: 0,
     circuitInfo: {},
+    resultInfo: {
+      result_info: {
+        num_layers: 0,
+      },
+    },
+    selectedLayer: 0,
+    probsLabel: [],
+    probsData: [],
   }),
   mutations: cirtMutations,
   actions: cirtActions,

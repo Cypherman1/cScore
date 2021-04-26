@@ -33,8 +33,47 @@ export default {
   change_grid_row(state, num) {
     state.gRow = state.gRow + num;
   },
+  set_result_info(state, resultInfo) {
+    // console.log(JSON.stringify(resulInfo));
+    state.resultInfo = resultInfo;
+    let labels = [];
+    let data = [];
+    if (resultInfo.result_info.layers) {
+      const resultLayerInfo = resultInfo.result_info.layers.find(
+        (layer) => layer.layer_index === state.selectedLayer
+      );
+      Object.keys(resultLayerInfo.probs).map((key) => {
+        labels.push(key);
+        data.push(resultLayerInfo.probs[key]);
+      });
+    }
+    state.probsLabels = labels;
+    state.probsData = data;
+  },
+  set_selected_layer(state, selectedLayer) {
+    state.selectedLayer = selectedLayer;
+    let labels = [];
+    let data = [];
+    if (state.resultInfo.result_info.layers) {
+      const resultLayerInfo = state.resultInfo.result_info.layers.find(
+        (layer) => layer.layer_index === selectedLayer
+      );
+      Object.keys(resultLayerInfo.probs).map((key) => {
+        labels.push(key);
+        data.push(resultLayerInfo.probs[key]);
+      });
+    }
+    state.probsLabels = labels;
+    state.probsData = data;
+  },
   change_grid_col(state, num) {
     state.gCol = state.gCol + num;
+  },
+  set_probs_labels(state, probsLabels) {
+    state.probsLabels = probsLabels;
+  },
+  set_probs_data(state, probsData) {
+    state.probsData = probsData;
   },
   calc_circuit_info(state) {
     let circuitWidth = 0;

@@ -44,4 +44,16 @@ export default {
   circuitInfo(state) {
     return state.circuitInfo;
   },
+  resultInfo(state) {
+    return state.resultInfo;
+  },
+  selectedLayer(state) {
+    return state.selectedLayer;
+  },
+  probsLabels(state) {
+    return state.probsLabels;
+  },
+  probsData(state) {
+    return state.probsData;
+  },
 };

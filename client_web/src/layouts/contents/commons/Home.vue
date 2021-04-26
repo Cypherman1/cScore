@@ -45,10 +45,43 @@
             <div class="infomation-panel-header row">
               <div class="ml-1 mt-1">Probability</div>
               <div class="ml-auto">
-                <a-button type="link" icon="small-dash" />
+                <span class="mr-1"> Layer </span>
+                <a-select
+                  style="width:80px"
+                  :value="selectedLayer"
+                  @change="handleSelected"
+                >
+                  <a-select-option
+                    v-for="layer in resultInfo.result_info.num_layers"
+                    :value="Number(layer) - 1"
+                    :key="Number(layer) - 1"
+                    >{{ layer - 1 }}</a-select-option
+                  >
+                </a-select>
               </div>
             </div>
-            <div></div>
+            <div>
+              <bar-chart
+                :styles="{
+                  height: '210px',
+                  position: 'relative',
+                }"
+                :chart-data="probabilityData"
+                :options="{
+                  scales: {
+                    yAxes: [
+                      {
+                        ticks: {
+                          beginAtZero: true,
+                        },
+                      },
+                    ],
+                  },
+                  responsive: true,
+                  maintainAspectRatio: false,
+                }"
+              ></bar-chart>
+            </div>
           </div>
           <div class="col infomation-panel-col">
             <div class="infomation-panel-header row">
@@ -92,6 +125,7 @@ import VueJsonPretty from "vue-json-pretty";
 import "vue-json-pretty/lib/styles.css";
 import { mapGetters, mapActions } from "vuex";
 import PanelGate from "../../../components/quantum/PanelGate.vue";
+import BarChart from "../../../components/quantum/BarChart.js";
 export default {
   components: {
     GNB,
@@ -102,6 +136,7 @@ export default {
     DropBox,
     PanelGate,
     DropBox,
+    BarChart,
   },
   data() {
     return {
@@ -124,6 +159,10 @@ export default {
       },
       dragOffsetX: null,
       dragOffsetY: null,
+      probabilityData: {
+        labels: [],
+        datasets: [],
+      },
     };
   },
   computed: {
@@ -139,10 +178,17 @@ export default {
       panelGates: "circuit/panelGates",
       chosingGate: "circuit/chosingGate",
       circuitInfo: "circuit/circuitInfo",
+      resultInfo: "circuit/resultInfo",
+      selectedLayer: "circuit/selectedLayer",
+      probsLabels: "circuit/probsLabels",
+      probsData: "circuit/probsData",
     }),
     cursor() {
       return `cursor: ${this.draggingGate ? "grabbing" : "grab"}`;
     },
+  },
+  mounted() {
+    this.fillData();
   },
 
   methods: {
@@ -153,8 +199,26 @@ export default {
       changeGridCol: "circuit/changeGridCol",
       changeGridRow: "circuit/changeGridRow",
       calcCircuitInfo: "circuit/calcCircuitInfo",
+      updateCircuit: "circuit/updateCircuit",
+      setSelectedlayer: "circuit/setSelectedlayer",
     }),
-    handleDrop(e) {
+    fillData() {
+      let labels = [];
+      let data = [];
+      if (this.resultInfo.result_info.layers) {
+        this.probabilityData = {
+          labels: this.probsLabels,
+          datasets: [
+            {
+              label: "Probability",
+              backgroundColor: "#20B2AA",
+              data: this.probsData,
+            },
+          ],
+        };
+      }
+    },
+    async handleDrop(e) {
       e.preventDefault();
       let col = Math.floor(e.offsetX / this.cWidth);
       let row = Math.floor(e.offsetY / this.cHeight);
@@ -171,6 +235,8 @@ export default {
         });
       }
       this.calcCircuitInfo();
+      await this.updateCircuit(this.circuitInfo);
+      this.fillData();
       this.setDropBox(null);
     },
     handleDragOver(e) {
@@ -188,6 +254,10 @@ export default {
         });
       }
     },
+    handleSelected(value) {
+      this.setSelectedlayer(value);
+      this.fillData();
+    },
   },
 };
 </script>
@@ -196,6 +266,7 @@ export default {
 .qbit-lable {
   font: italic 13px;
 }
+
 .infomation-panel-header {
   border-bottom: 2px solid lightgray;
   margin-left: -15px;
@@ -247,6 +318,9 @@ export default {
   flex-grow: 0;
   flex-shrink: 0;
   flex-basis: 350px;
+  overflow-x: auto;
+  overflow-y: auto;
+  height: calc(100vh - 138px);
 }
 .testSVG {
   z-index: 100;
