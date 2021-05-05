@@ -47,8 +47,16 @@ export default {
         data.push(resultLayerInfo.probs[key]);
       });
     }
-    state.probsLabels = labels;
-    state.probsData = data;
+    state.probsData = {
+      labels: labels,
+      datasets: [
+        {
+          label: "Probability",
+          backgroundColor: "#20B2AA",
+          data: data,
+        },
+      ],
+    };
   },
   set_selected_layer(state, selectedLayer) {
     state.selectedLayer = selectedLayer;
@@ -63,8 +71,16 @@ export default {
         data.push(resultLayerInfo.probs[key]);
       });
     }
-    state.probsLabels = labels;
-    state.probsData = data;
+    state.probsData = {
+      labels: labels,
+      datasets: [
+        {
+          label: "Probability",
+          backgroundColor: "#20B2AA",
+          data: data,
+        },
+      ],
+    };
   },
   change_grid_col(state, num) {
     state.gCol = state.gCol + num;

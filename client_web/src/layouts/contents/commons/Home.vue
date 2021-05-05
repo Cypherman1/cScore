@@ -66,7 +66,7 @@
                   height: '210px',
                   position: 'relative',
                 }"
-                :chart-data="probabilityData"
+                :chart-data="probsData"
                 :options="{
                   scales: {
                     yAxes: [
@@ -188,7 +188,7 @@ export default {
     },
   },
   mounted() {
-    this.fillData();
+    // this.fillData();
   },
 
   methods: {
@@ -202,22 +202,20 @@ export default {
       updateCircuit: "circuit/updateCircuit",
       setSelectedlayer: "circuit/setSelectedlayer",
     }),
-    fillData() {
-      let labels = [];
-      let data = [];
-      if (this.resultInfo.result_info.layers) {
-        this.probabilityData = {
-          labels: this.probsLabels,
-          datasets: [
-            {
-              label: "Probability",
-              backgroundColor: "#20B2AA",
-              data: this.probsData,
-            },
-          ],
-        };
-      }
-    },
+    // fillData() {
+    //   if (this.resultInfo.result_info.layers) {
+    //     this.probabilityData = {
+    //       labels: this.probsLabels,
+    //       datasets: [
+    //         {
+    //           label: "Probability",
+    //           backgroundColor: "#20B2AA",
+    //           data: this.probsData,
+    //         },
+    //       ],
+    //     };
+    //   }
+    // },
     async handleDrop(e) {
       e.preventDefault();
       let col = Math.floor(e.offsetX / this.cWidth);
@@ -236,7 +234,6 @@ export default {
       }
       this.calcCircuitInfo();
       await this.updateCircuit(this.circuitInfo);
-      this.fillData();
       this.setDropBox(null);
     },
     handleDragOver(e) {
@@ -256,7 +253,7 @@ export default {
     },
     handleSelected(value) {
       this.setSelectedlayer(value);
-      this.fillData();
+      // this.fillData();
     },
   },
 };
