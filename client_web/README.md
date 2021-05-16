@@ -1,60 +1,90 @@
-# UI Dev Proejct Template (with Vue CLI 3)
+# vue-admin-template
 
-## Project setup
-```
+English | [简体中文](./README-zh.md)
+
+> A minimal vue admin template with Element UI & axios & iconfont & permission control & lint
+
+**Live demo:** http://panjiachen.github.io/vue-admin-template
+
+
+**The current version is `v4.0+` build on `vue-cli`. If you want to use the old version , you can switch branch to [tag/3.11.0](https://github.com/PanJiaChen/vue-admin-template/tree/tag/3.11.0), it does not rely on `vue-cli`**
+
+## Build Setup
+
+```bash
+# clone the project
+git clone https://github.com/PanJiaChen/vue-admin-template.git
+
+# enter the project directory
+cd vue-admin-template
+
+# install dependency
 npm install
+
+# develop
+npm run dev
 ```
 
-### Compiles and hot-reloads for development
+This will automatically open http://localhost:9528
+
+## Build
+
+```bash
+# build for test environment
+npm run build:stage
+
+# build for production environment
+npm run build:prod
 ```
-npm run serve
+
+## Advanced
+
+```bash
+# preview the release environment effect
+npm run preview
+
+# preview the release environment effect + static resource analysis
+npm run preview -- --report
+
+# code format check
+npm run lint
+
+# code format check and auto fix
+npm run lint -- --fix
 ```
 
-### Compiles and minifies for production
-```
-npm run build
-```
+Refer to [Documentation](https://panjiachen.github.io/vue-element-admin-site/guide/essentials/deploy.html) for more information
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+## Demo
 
+![demo](https://github.com/PanJiaChen/PanJiaChen.github.io/blob/master/images/demo.gif)
 
-## 폴더구조
-* local_modules : 직접 설치용 패키지 (uidev-component)
-* uidev_application : UI Dev IDE Design Editor 공통 Application 폴더
-* uidev_tools : UI Dev 제공 개발도구 메타데이터 관리 폴더
-  * ide : UI Dev IDE 메타데이터 폴더
-  * mocks : Mock-up API 메타데이터 폴더
-* public : Html Template (index.html, favicon.ico)
-* src
-  * assets : 이미지, 폰트 등 Static Web Resource
-  * components : 프로젝트 공통 컴포넌트
-  * styles : 프로젝트 스타일 파일 (CSS, SCSS)
-    * theme : UI Dev IDE Theme Editor로 변경되는 프로젝트 테마
-  * system : 프로젝트 시스템 공통모듈 라이브러리/설정 (Vuex, router 등)
-  * layouts : 프로젝트 화면 컴포넌트
+## Extra
 
+If you want router permission && generate menu by user roles , you can use this branch [permission-control](https://github.com/PanJiaChen/vue-admin-template/tree/permission-control)
 
-## For UI Dev IDE Design Editor
-아래 명령어로 Design Editor용 Application 번들링을 수행하며,
-번들링 결과물은 uidev_application 폴더에 저장됨
-```
-npm run ide
-```
-번들링 결과물은 소스코드 형상에 함께 배포됨
-* index.html : Design Editor 용 엔트리 파일
-* theme.html : Theme Editor 용 엔트리 파일
+For `typescript` version, you can use [vue-typescript-admin-template](https://github.com/Armour/vue-typescript-admin-template) (Credits: [@Armour](https://github.com/Armour))
 
+## Related Project
 
-## UI Dev Theme 파일 (/src/styles/theme)
-* theme.scss : SASS 테마 변수 설정파일. UI Dev Component의 Foundation Token을 활용하여 변수값을 할당한다.
-* Theme.vue : 테마 변경에 따른 미리보기 화면 컴포넌트
-* theme.js : 테마 미리보기 화면을 보기 위한 Entry Point (Webpack 빌드 후 /theme.html로 접근할 수 있다)
+- [vue-element-admin](https://github.com/PanJiaChen/vue-element-admin)
 
+- [electron-vue-admin](https://github.com/PanJiaChen/electron-vue-admin)
 
-## Mockup API (/uidev_tools/mocks)
-* Webpack 개발서버 활용 시 내부 HTTP Proxy를 활용하여 가상의 API 데이터를 받을 수 있음 (BASE_URL/api/{api-name} 형태로 호출)
-* /uidev_tools/mocks/api 폴더 하위에 .json 파일을 아래 Key : Value 규칙에 따라 작성
-  * Key: 호출할 API 경로. '/'로 시작해야 함
-  * Value: 응답 받고자 하는 데이터 (JSON Format)
-* HTTP 응답은 200, 304로 회신되며 정의되어 있지 않는 API를 호출하면 404 회신
+- [vue-typescript-admin-template](https://github.com/Armour/vue-typescript-admin-template)
+
+- [awesome-project](https://github.com/PanJiaChen/vue-element-admin/issues/2312)
+
+## Browsers support
+
+Modern browsers and Internet Explorer 10+.
+
+| [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/edge/edge_48x48.png" alt="IE / Edge" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>IE / Edge | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/firefox/firefox_48x48.png" alt="Firefox" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>Firefox | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/chrome/chrome_48x48.png" alt="Chrome" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>Chrome | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/safari/safari_48x48.png" alt="Safari" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>Safari |
+| --------- | --------- | --------- | --------- |
+| IE10, IE11, Edge| last 2 versions| last 2 versions| last 2 versions
+
+## License
+
+[MIT](https://github.com/PanJiaChen/vue-admin-template/blob/master/LICENSE) license.
+
+Copyright (c) 2017-present PanJiaChen

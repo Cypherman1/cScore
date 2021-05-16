@@ -1,3 +1,0 @@
-<template>
-	<ur-badge componentid="<%= UID %>" color="success" shape="dot">Success</ur-badge>
-</template>

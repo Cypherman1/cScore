@@ -1,127 +1,123 @@
-// Pages Options : for Main Application
-const mainPages = {
-  index: {
-    entry: ["src/main.js"],
-    template: "public/index.html",
-    filename: "index.html",
-    title: "Main",
-  },
-};
+'use strict'
+const path = require('path')
+const defaultSettings = require('./src/settings.js')
 
-// Pages Options : for IDE Application
-const idePages = {
-  index: {
-    entry: ["uidev_tools/ide/ide.js"],
-    template: "public/index.html",
-    filename: "index.html",
-    title: "Ide",
-  },
-  theme: {
-    entry: ["src/styles/theme/theme.js"],
-    template: "public/theme.html",
-    filename: "theme.html",
-    title: "Theme",
-  },
-  preview: {
-    entry: ["uidev_tools/ide/preview.js"],
-    template: "public/index.html",
-    filename: "preview.html",
-    title: "Preview",
-  },
-};
+function resolve(dir) {
+  return path.join(__dirname, dir)
+}
 
-const appPages = process.env.IDE_PAGE ? idePages : mainPages;
-const runtimeCompiler = process.env.IDE_PAGE ? true : false;
+const name = defaultSettings.title || 'vue Admin Template' // page title
 
-// Vue CLI Configs
+// If your port is set to 80,
+// use administrator privileges to execute the command line.
+// For example, Mac: sudo npm run
+// You can change the port by the following methods:
+// port = 9528 npm run dev OR npm run dev --port = 9528
+const port = process.env.port || process.env.npm_config_port || 9528 // dev port
+
+// All configuration item explanations can be find in https://cli.vuejs.org/config/
 module.exports = {
-  // Setup Alias
-  chainWebpack: (config) => {
-    const svgRule = config.module.rule("svg");
-
-    svgRule.uses.clear();
-
-    svgRule
-      .use("vue-loader")
-      .loader("vue-loader") // or `vue-loader-v16` if you are using a preview support of Vue 3 in Vue CLI
-      .end()
-      .use("vue-svg-loader")
-      .loader("vue-svg-loader");
+  /**
+   * You will need to set publicPath if you plan to deploy your site under a sub path,
+   * for example GitHub Pages. If you plan to deploy your site to https://foo.github.io/bar/,
+   * then publicPath should be set to "/bar/".
+   * In most cases please use '/' !!!
+   * Detail: https://cli.vuejs.org/config/#publicpath
+   */
+  publicPath: '/',
+  outputDir: 'dist',
+  assetsDir: 'static',
+  lintOnSave: process.env.NODE_ENV === 'development',
+  productionSourceMap: false,
+  devServer: {
+    port: port,
+    open: true,
+    overlay: {
+      warnings: false,
+      errors: true
+    },
+    before: require('./mock/mock-server.js')
   },
-
   configureWebpack: {
+    // provide the app's title in webpack's name field, so that
+    // it can be accessed in index.html to inject the correct title.
+    name: name,
     resolve: {
       alias: {
-        "@uidev": "uidev-component",
-      },
-    },
-  },
-
-  // For IDE, Bundled resource can be access via file protocol
-  publicPath: process.env.PUBLIC_PATH || "/",
-
-  // Use gzip in devServer
-  devServer: {
-    host: "localhost",
-    compress: true,
-    // Mock APIs for Local Development
-    proxy: {
-      "/api": {
-        target: "http://127.0.0.1:8080",
-        bypass: (req, res) => {
-          let getMockData = require("./uidev_tools/mocks/mock-api")[req.url];
-
-          if (getMockData) res.send(getMockData());
-          else return false;
-        },
-      },
-    },
-  },
-  pages: appPages,
-
-  // Don't need to create source-map
-  productionSourceMap: false,
-
-  chainWebpack: (config) => {
-    // Web Fonts file have to be cached (Fixed resource name)
-    config.module
-      .rule("fonts")
-      .use("url-loader")
-      .loader("url-loader")
-      .tap((options) => {
-        options.fallback.options.name = "fonts/[name].[ext]";
-        return options;
-      });
-
-    // Image file have to be cached (Fixed resource name)
-    config.module
-      .rule("images")
-      .test(/\.(png|jpe?g|gif|webp)(\?.*)?$/)
-      .use("url-loader")
-      .loader("file-loader")
-      .tap((options) => {
-        options.name = "img/[name].[ext]";
-        return options;
-      });
-
-    if (process.env.IDE_PAGE) {
-      const webpack = require("webpack");
-      config.plugins.delete("hash-module-ids");
-      config.plugin("named-modules").use(webpack.NamedModulesPlugin);
-      config.optimization.usedExports(false);
+        '@': resolve('src')
+      }
     }
   },
+  chainWebpack(config) {
+    // it can improve the speed of the first screen, it is recommended to turn on preload
+    config.plugin('preload').tap(() => [
+      {
+        rel: 'preload',
+        // to ignore runtime.js
+        // https://github.com/vuejs/vue-cli/blob/dev/packages/@vue/cli-service/lib/config/app.js#L171
+        fileBlacklist: [/\.map$/, /hot-update\.js$/, /runtime\..*\.js$/],
+        include: 'initial'
+      }
+    ])
 
-  //For SASS Variable Import
-  css: {
-    loaderOptions: {
-      scss: {
-        additionalData: `@import "~@/styles/variables.scss";`,
-        implementation: require("sass"),
-      },
-    },
-  },
+    // when there are many pages, it will cause too many meaningless requests
+    config.plugins.delete('prefetch')
 
-  runtimeCompiler,
-  transpileDependencies: ["uidev-component", "vuex", "ansi-regex"],
-};
+    // set svg-sprite-loader
+    config.module
+      .rule('svg')
+      .exclude.add(resolve('src/icons'))
+      .end()
+    config.module
+      .rule('icons')
+      .test(/\.svg$/)
+      .include.add(resolve('src/icons'))
+      .end()
+      .use('svg-sprite-loader')
+      .loader('svg-sprite-loader')
+      .options({
+        symbolId: 'icon-[name]'
+      })
+      .end()
+
+    config
+      .when(process.env.NODE_ENV !== 'development',
+        config => {
+          config
+            .plugin('ScriptExtHtmlWebpackPlugin')
+            .after('html')
+            .use('script-ext-html-webpack-plugin', [{
+            // `runtime` must same as runtimeChunk name. default is `runtime`
+              inline: /runtime\..*\.js$/
+            }])
+            .end()
+          config
+            .optimization.splitChunks({
+              chunks: 'all',
+              cacheGroups: {
+                libs: {
+                  name: 'chunk-libs',
+                  test: /[\\/]node_modules[\\/]/,
+                  priority: 10,
+                  chunks: 'initial' // only package third parties that are initially dependent
+                },
+                elementUI: {
+                  name: 'chunk-elementUI', // split elementUI into a single package
+                  priority: 20, // the weight needs to be larger than libs and app or it will be packaged into libs or app
+                  test: /[\\/]node_modules[\\/]_?element-ui(.*)/ // in order to adapt to cnpm
+                },
+                commons: {
+                  name: 'chunk-commons',
+                  test: resolve('src/components'), // can customize your rules
+                  minChunks: 3, //  minimum common number
+                  priority: 5,
+                  reuseExistingChunk: true
+                }
+              }
+            })
+          // https:// webpack.js.org/configuration/optimization/#optimizationruntimechunk
+          config.optimization.runtimeChunk('single')
+        }
+      )
+  }
+}

@@ -1,5 +1,0 @@
-<template>
-    <ur-action-bar componentid="<%= UID %>">
-        <ur-button>Button</ur-button>
-    </ur-action-bar>
-</template>

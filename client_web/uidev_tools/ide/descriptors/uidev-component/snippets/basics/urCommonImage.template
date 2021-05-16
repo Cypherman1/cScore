@@ -1,3 +1,0 @@
-<template>
-    <img componentid="<%= UID %>" src="/images/thumb_92x52.png" />
-</template>

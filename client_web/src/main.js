@@ -1,42 +1,43 @@
-import Vue from "vue";
+import Vue from 'vue'
 
-import App from "./App.vue";
-import router from "./systems/router/router";
-import store from "./systems/vuex/store";
-import http from "./systems/http/http";
-import {
-  Select,
-  DatePicker,
-  Table,
-  Images,
-  Tabs,
-  Button,
-  Icon,
-} from "ant-design-vue";
-import Viewer from "v-viewer";
-import "ant-design-vue/dist/antd.css";
-import "viewerjs/dist/viewer.css";
-import VueKonva from "vue-konva";
-import UUID from "vue-uuid";
-import { mapGetters, mapActions } from "vuex";
+import 'normalize.css/normalize.css' // A modern alternative to CSS resets
 
-import "./components";
-import "./styles/common.scss";
-Vue.use(VueKonva);
-Vue.use(Select);
-Vue.use(DatePicker);
-Vue.use(Table);
-Vue.use(Viewer);
-Vue.use(Tabs);
-Vue.use(Button);
-Vue.use(Icon);
-Vue.use(UUID);
+import ElementUI from 'element-ui'
+import 'element-ui/lib/theme-chalk/index.css'
+import locale from 'element-ui/lib/locale/lang/en' // lang i18n
 
-Vue.config.productionTip = false;
+import '@/styles/index.scss' // global css
+
+import App from './App'
+import store from './store'
+import router from './router'
+
+import '@/icons' // icon
+import '@/permission' // permission control
+
+/**
+ * If you don't want to use mock-server
+ * you want to use MockJs for mock api
+ * you can execute: mockXHR()
+ *
+ * Currently MockJs will be used in the production environment,
+ * please remove it before going online ! ! !
+ */
+if (process.env.NODE_ENV === 'production') {
+  const { mockXHR } = require('../mock')
+  mockXHR()
+}
+
+// set ElementUI lang to EN
+Vue.use(ElementUI, { locale })
+// 如果想要中文版 element-ui，按如下方式声明
+// Vue.use(ElementUI)
+
+Vue.config.productionTip = false
 
 new Vue({
+  el: '#app',
   router,
   store,
-  http,
-  render: (h) => h(App),
-}).$mount("#app");
+  render: h => h(App)
+})

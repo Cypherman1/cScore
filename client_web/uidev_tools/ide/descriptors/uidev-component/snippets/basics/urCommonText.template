@@ -1,3 +1,0 @@
-<template>
-    <span componentid="<%= UID %>" >This is text.</span>
-</template>

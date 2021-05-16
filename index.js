@@ -7,6 +7,7 @@ const cors = require("cors");
 const keys = require("./config/keys");
 const dotenv = require("dotenv");
 const compression = require("compression");
+var expressStaticGzip = require("express-static-gzip");
 require("./models/User");
 require("./models/UploadedImgs");
 require("./models/Templates");
@@ -63,14 +64,15 @@ require("./routes/templateRoutes")(app);
 if (process.env.NODE_ENV === "production") {
   // Express will serve up production assets
   // like our main.js file, or main.css file!
-  app.use(express.static("client_web/dist"));
+  // app.use(express.static("client_web/dist"));
+  app.use("/", expressStaticGzip("client_web/dist"));
 
   // Express will serve up the index.html file
   // if it doesn't recognize the route
 
-  app.get("*", (req, res) => {
-    res.sendFile(path.resolve(__dirname, "client_web", "dist", "index.html"));
-  });
+  // app.get("*", (req, res) => {
+  //   res.sendFile(path.resolve(__dirname, "client_web", "dist", "index.html"));
+  // });
 }
 
 // const PORT = process.env.PORT || 5000;
