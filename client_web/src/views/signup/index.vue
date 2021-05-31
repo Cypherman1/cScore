@@ -1,15 +1,15 @@
 <template>
-  <div class="login-container">
+  <div class="signup-container">
     <el-form
-      ref="loginForm"
-      :model="loginForm"
-      :rules="loginRules"
-      class="login-form"
+      ref="signupForm"
+      :model="signupForm"
+      :rules="signupRules"
+      class="signup-form"
       auto-complete="on"
       label-position="left"
     >
       <div class="title-container">
-        <h3 class="title">Login Form</h3>
+        <h3 class="title">Signup</h3>
       </div>
 
       <el-form-item prop="username">
@@ -18,8 +18,8 @@
         </span>
         <el-input
           ref="username"
-          v-model="loginForm.username"
-          placeholder="Username"
+          v-model="signupForm.username"
+          placeholder="email"
           name="username"
           type="text"
           tabindex="1"
@@ -34,13 +34,13 @@
         <el-input
           :key="passwordType"
           ref="password"
-          v-model="loginForm.password"
+          v-model="signupForm.password"
           :type="passwordType"
           placeholder="Password"
           name="password"
           tabindex="2"
           auto-complete="on"
-          @keyup.enter.native="handleLogin"
+          @keyup.enter.native="handleSignup"
         />
         <span class="show-pwd" @click="showPwd">
           <svg-icon
@@ -53,25 +53,21 @@
         :loading="loading"
         type="primary"
         style="width:100%;margin-bottom:30px;"
-        @click.native.prevent="handleLogin"
+        @click.native.prevent="handleSignup"
       >
-        Login
+        Signup
       </el-button>
 
-      <div class="tips">
-        <span style="margin-right:20px;">username: admin</span>
-        <span> password: any</span>
-      </div>
+      <div class="tips"></div>
     </el-form>
   </div>
 </template>
 
 <script>
 import { validUsername } from '@/utils/validate'
-import { mapActions } from 'vuex'
 
 export default {
-  name: 'Login',
+  name: 'Signup',
   data() {
     const validateUsername = (rule, value, callback) => {
       if (!validUsername(value)) {
@@ -88,11 +84,11 @@ export default {
       }
     }
     return {
-      loginForm: {
-        username: 'admin',
-        password: '111111'
+      signupForm: {
+        username: '',
+        password: ''
       },
-      loginRules: {
+      signupRules: {
         username: [
           { required: true, trigger: 'blur', validator: validateUsername }
         ],
@@ -105,18 +101,15 @@ export default {
       redirect: undefined
     }
   },
-  // watch: {
-  //   $route: {
-  //     handler: function(route) {
-  //       this.redirect = route.query && route.query.redirect
-  //     },
-  //     immediate: true
-  //   }
-  // },
+  watch: {
+    $route: {
+      handler: function(route) {
+        this.redirect = route.query && route.query.redirect
+      },
+      immediate: true
+    }
+  },
   methods: {
-    ...mapActions({
-      login: 'auth/login'
-    }),
     showPwd() {
       if (this.passwordType === 'password') {
         this.passwordType = ''
@@ -127,33 +120,32 @@ export default {
         this.$refs.password.focus()
       })
     },
-    handleLogin() {
-      this.$refs.loginForm.validate((valid) => {
-        if (valid) {
-          this.loading = true
-          this.login(this.loginForm)
-            .then(() => {
-              this.$router.push({ path: this.redirect || '/' })
-              this.loading = false
-            })
-            .catch(() => {
-              this.loading = false
-            })
-
-          // this.$store
-          //   .dispatch('user/login', this.loginForm)
-          //   .then(() => {
-          //     this.$router.push({ path: this.redirect || '/' })
-          //     this.loading = false
-          //   })
-          //   .catch(() => {
-          //     this.loading = false
-          //   })
-        } else {
-          console.log('error submit!!')
-          return false
-        }
-      })
+    handleSignup() {
+      //   this.$refs.signupForm.validate((valid) => {
+      //     if (valid) {
+      //       this.loading = true
+      //       this.login(this.loginForm)
+      //         .then(() => {
+      //           this.$router.push({ path: this.redirect || '/' })
+      //           this.loading = false
+      //         })
+      //         .catch(() => {
+      //           this.loading = false
+      //         })
+      //       // this.$store
+      //       //   .dispatch('user/login', this.loginForm)
+      //       //   .then(() => {
+      //       //     this.$router.push({ path: this.redirect || '/' })
+      //       //     this.loading = false
+      //       //   })
+      //       //   .catch(() => {
+      //       //     this.loading = false
+      //       //   })
+      //     } else {
+      //       console.log('error submit!!')
+      //       return false
+      //     }
+      //   })
     }
   }
 }
@@ -168,13 +160,13 @@ $light_gray: #fff;
 $cursor: #fff;
 
 @supports (-webkit-mask: none) and (not (cater-color: $cursor)) {
-  .login-container .el-input input {
+  .signup-container .el-input input {
     color: $cursor;
   }
 }
 
 /* reset element-ui css */
-.login-container {
+.signup-container {
   .el-input {
     display: inline-block;
     height: 47px;
@@ -211,13 +203,13 @@ $bg: #2d3a4b;
 $dark_gray: #889aa4;
 $light_gray: #eee;
 
-.login-container {
+.signup-container {
   min-height: 100%;
   width: 100%;
   background-color: $bg;
   overflow: hidden;
 
-  .login-form {
+  .signup-form {
     position: relative;
     width: 520px;
     max-width: 100%;
