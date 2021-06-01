@@ -11,15 +11,14 @@
       <div class="title-container">
         <h3 class="title">Signup</h3>
       </div>
-
       <el-form-item prop="username">
         <span class="svg-container">
-          <svg-icon icon-class="user" />
+          <i class="el-icon-user"></i>
         </span>
         <el-input
           ref="username"
           v-model="signupForm.username"
-          placeholder="email"
+          placeholder="Name"
           name="username"
           type="text"
           tabindex="1"
@@ -27,9 +26,24 @@
         />
       </el-form-item>
 
+      <el-form-item prop="email">
+        <span class="svg-container">
+          <i class="el-icon-message"></i>
+        </span>
+        <el-input
+          ref="email"
+          v-model="signupForm.email"
+          placeholder="Email"
+          name="email"
+          type="text"
+          tabindex="2"
+          auto-complete="on"
+        />
+      </el-form-item>
+
       <el-form-item prop="password">
         <span class="svg-container">
-          <svg-icon icon-class="password" />
+          <i class="el-icon-lock"></i>
         </span>
         <el-input
           :key="passwordType"
@@ -38,7 +52,27 @@
           :type="passwordType"
           placeholder="Password"
           name="password"
-          tabindex="2"
+          tabindex="3"
+          auto-complete="on"
+        />
+        <span class="show-pwd" @click="showPwd">
+          <svg-icon
+            :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'"
+          />
+        </span>
+      </el-form-item>
+      <el-form-item prop="confirmPassword">
+        <span class="svg-container">
+          <i class="el-icon-lock"></i>
+        </span>
+        <el-input
+          :key="passwordType"
+          ref="confirmPassword"
+          v-model="signupForm.confirmPassword"
+          :type="passwordType"
+          placeholder="Confirm password"
+          name="password"
+          tabindex="4"
           auto-complete="on"
           @keyup.enter.native="handleSignup"
         />
@@ -48,30 +82,36 @@
           />
         </span>
       </el-form-item>
-
       <el-button
         :loading="loading"
         type="primary"
-        style="width:100%;margin-bottom:30px;"
+        style="width:100%;margin-bottom:20px;"
         @click.native.prevent="handleSignup"
       >
         Signup
       </el-button>
-
-      <div class="tips"></div>
+      <div style="text-align:center;">
+        <span style="margin-right: 10px; color: white">Or signup with</span>
+        <el-button style="padding:5px; padding-right: 10px; padding-left: 10px">
+          <img
+            style="width: 20px;"
+            :src="require(`../../assets/imgs/google-logo.png`)"
+          />
+        </el-button>
+      </div>
     </el-form>
   </div>
 </template>
 
 <script>
-import { validUsername } from '@/utils/validate'
+import { validUsername, validEmail } from '@/utils/validate'
 
 export default {
   name: 'Signup',
   data() {
-    const validateUsername = (rule, value, callback) => {
-      if (!validUsername(value)) {
-        callback(new Error('Please enter the correct user name'))
+    const validateEmail = (rule, value, callback) => {
+      if (!validEmail(value)) {
+        callback(new Error('Please enter a valid email!'))
       } else {
         callback()
       }
@@ -83,17 +123,34 @@ export default {
         callback()
       }
     }
+    const validateConfirmPassword = (rule, value, callback) => {
+      if (value !== this.signupForm.password) {
+        callback(new Error('The passwords do not match!'))
+      } else {
+        callback()
+      }
+    }
     return {
       signupForm: {
         username: '',
-        password: ''
+        email: '',
+        password: '',
+        confirmPassword: ''
       },
       signupRules: {
-        username: [
-          { required: true, trigger: 'blur', validator: validateUsername }
-        ],
+        // username: [
+        //   { required: true, trigger: 'blur', validator: validateUsername }
+        // ],
+        email: [{ required: true, trigger: 'blur', validator: validateEmail }],
         password: [
           { required: true, trigger: 'blur', validator: validatePassword }
+        ],
+        confirmPassword: [
+          {
+            required: true,
+            trigger: 'blur',
+            validator: validateConfirmPassword
+          }
         ]
       },
       loading: false,

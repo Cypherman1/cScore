@@ -52,15 +52,14 @@
       <el-button
         :loading="loading"
         type="primary"
-        style="width:100%;margin-bottom:30px;"
+        style="width:100%;margin-bottom:10px;"
         @click.native.prevent="handleLogin"
       >
         Login
       </el-button>
-
-      <div class="tips">
-        <span style="margin-right:20px;">username: admin</span>
-        <span> password: any</span>
+      <div style="text-align: center;">
+        <span style="color: white"> Don't have account? </span>
+        <el-button @click="moveToSignup" type="text">Signup</el-button>
       </div>
     </el-form>
   </div>
@@ -126,6 +125,9 @@ export default {
       this.$nextTick(() => {
         this.$refs.password.focus()
       })
+    },
+    moveToSignup() {
+      this.$router.push({ path: '/signup' })
     },
     handleLogin() {
       this.$refs.loginForm.validate((valid) => {
